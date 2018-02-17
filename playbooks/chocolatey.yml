@@ -13,8 +13,17 @@
         unicode_language: fr-FR
         location: 84
         copy_settings: true
+
+    # from https://forums.adobe.com/thread/1976740
+    - name: adobe norton skip
+      win_regedit:
+        path: "{{ item }}"
+      items:
+        - 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\N360'
+        - 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\N360'
     
     - name: adobe digital editions
       win_chocolatey:
         name: adobedigitaleditions
+        ignore_checksums: true
 
