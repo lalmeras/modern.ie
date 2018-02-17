@@ -1,0 +1,10 @@
+---
+default_playbook: playbooks/default.yml
+virtualenv_path: .tools/virtualenv
+dependencies:
+  - name: pywinrm
+ansible:
+  skip: no
+  version: '2.4.2.0'
+selinux: true
+interpreter: /usr/bin/python

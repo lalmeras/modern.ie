@@ -1,0 +1,14 @@
+---
+
+- hosts: windows
+  tasks:
+    - name: chocolatey
+      win_chocolatey:
+        name: all
+        state: latest
+
+    - name: locale setting
+      win_region:
+        name: fr-FR
+        copy_settings: true
+
