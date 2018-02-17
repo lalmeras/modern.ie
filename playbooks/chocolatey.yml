@@ -9,6 +9,12 @@
 
     - name: locale setting
       win_region:
-        name: fr-FR
+        format: fr-FR
+        unicode_language: fr-FR
+        location: 84
         copy_settings: true
+    
+    - name: adobe digital editions
+      win_chocolatey:
+        name: adobedigitaleditions
 
