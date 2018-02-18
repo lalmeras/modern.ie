@@ -13,6 +13,10 @@
         unicode_language: fr-FR
         location: 84
         copy_settings: true
+    
+    - name: firefox
+      win_chocolatey:
+        name: firefox
 
     # from https://forums.adobe.com/thread/1976740
     - name: adobe norton skip
