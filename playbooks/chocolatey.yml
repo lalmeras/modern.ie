@@ -13,7 +13,26 @@
         unicode_language: fr-FR
         location: 84
         copy_settings: true
-    
+
+    - name: keyboard layout
+      win_regedit:
+        path: HKLM:\SOFTWARE\Policies\Microsoft\Control Panel\International
+        name: BlockUserInputMethodsForSignIn
+        type: dword
+        data: 1
+
+    - name: keyboard layout
+      win_regedit:
+        path: '{{ item }}\Keyboard Layout\Preload'
+        name: '1'
+        data: 0000040C
+        type: string
+        state: present
+      with_items:
+        - HKU:\.DEFAULT
+        - HKLM:\SYSTEM
+        - "HKCU:"
+
     - name: firefox
       win_chocolatey:
         name: firefox
@@ -25,7 +44,7 @@
       items:
         - 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\N360'
         - 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\N360'
-    
+
     - name: adobe digital editions
       win_chocolatey:
         name: adobedigitaleditions
