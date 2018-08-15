@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Originally from https://gist.github.com/andreptb/57e388df5e881937e62a
+# and with comments from clement-igonet (same page)
+#
+# vagrant image needs to be:
+# * downloaded manually at http://aka.ms/<box_name>.vagrant
+# * unzipped
+# * added to vagrant boxes : vbox box add --name modern.ie/<box_name> <unzipped file.box>
+
+# box name into env var, same script can be used with different boxes. Defaults to win7-ie11.
+box_name = ENV['box_name'] || 'msedge.win10'
+# box repo into env var, so private repos/cache can be used. Defaults to http://aka.ms
+
+Vagrant.configure("2") do |config|
+  config.vm.box = 'modern.ie/' + box_name
+  # big timeout since windows boot is very slow
+  config.vm.boot_timeout = 500
+  config.vm.guest = :windows
+  config.vm.communicator = 'ssh'
+
+  # port forwarding
+  config.vm.network "forwarded_port", guest: 3389, host: 3389, id: "rdp", auto_correct: true
+  config.vm.network "forwarded_port", guest: 5985, host: 5985, id: "winrm", auto_correct: true
+
+  # SSH usage
+  config.ssh.username = "IEUser"
+  config.ssh.password = "Passw0rd!"
+  config.ssh.insert_key = false
+  config.ssh.sudo_command = ''
+
+  config.vm.provider "virtualbox" do |vb|
+    # first setup requires gui to be enabled so scripts can be executed in virtualbox guest screen
+    #vb.gui = true
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ["modifyvm", :id, "--vram", "128"]
+    vb.customize ["modifyvm", :id,  "--cpus", "2"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
+  end
+
+  config.ssh.shell = 'sh'
+  config.vm.provision "shell",
+    binary: false,
+    privileged: false,
+    path: 'winrm.ps1'
+end
