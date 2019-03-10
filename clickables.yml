@@ -1,0 +1,9 @@
+---
+ansible:
+  virtualenv:
+    selinux: true
+    path: .tools/virtualenv
+    requirements:
+      - ansible == 2.7.8
+      - pywinrm
+#interpreter: /usr/bin/python

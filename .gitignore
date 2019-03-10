@@ -3,6 +3,7 @@ molecule/*/molecule.yml
 .tools
 *.swp
 .molecule
+poetry.lock
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

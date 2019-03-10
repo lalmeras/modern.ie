@@ -3,6 +3,10 @@
 - hosts: windows
   tasks:
     - name: chocolatey
+      win_command: powershell.exe -
+      args:
+        stdin: Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    - name: chocolatey
       win_chocolatey:
         name: all
         state: latest
@@ -41,7 +45,7 @@
     - name: adobe norton skip
       win_regedit:
         path: "{{ item }}"
-      items:
+      with_items:
         - 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\N360'
         - 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\N360'
 
