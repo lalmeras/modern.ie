@@ -1,20 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Originally from https://gist.github.com/andreptb/57e388df5e881937e62a
-# and with comments from clement-igonet (same page)
-#
-# vagrant image needs to be:
-# * downloaded manually at http://aka.ms/<box_name>.vagrant
-# * unzipped
-# * added to vagrant boxes : vbox box add --name modern.ie/<box_name> <unzipped file.box>
-
-# box name into env var, same script can be used with different boxes. Defaults to win7-ie11.
-box_name = ENV['box_name'] || 'msedge.win10'
-# box repo into env var, so private repos/cache can be used. Defaults to http://aka.ms
-
 Vagrant.configure("2") do |config|
-  config.vm.box = 'modern.ie/' + box_name
+  config.vm.box = 'Microsoft/EdgeOnWindows10'
   # big timeout since windows boot is very slow
   config.vm.boot_timeout = 500
   config.vm.guest = :windows

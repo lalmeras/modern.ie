@@ -11,4 +11,5 @@ dependencies:
   - pip<19.0
   - pip:
      - poetry ~=0.12.0
+     - virtualenv
 
